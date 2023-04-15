@@ -1,11 +1,12 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React from 'react'
+import styled from 'styled-components/macro'
 
-import { MARKET_DATA, SPORTS_STORIES } from '../../data';
+import { MARKET_DATA, SPORTS_STORIES } from '../../data'
 
-import MarketCard from '../MarketCard';
-import SectionTitle from '../SectionTitle';
-import MiniStory from '../MiniStory';
+import MarketCard from '../MarketCard'
+import SectionTitle from '../SectionTitle'
+import MiniStory from '../MiniStory'
+import { QUERIES } from '../../constants'
 
 const SpecialtyStoryGrid = () => {
   return (
@@ -36,25 +37,65 @@ const SpecialtyStoryGrid = () => {
         </SectionTitle>
         <SportsStories>
           {SPORTS_STORIES.map((data) => (
-            <MiniStory key={data.id} {...data} />
+            <SportsStoryWrapper key={data.id}>
+              <MiniStory {...data} />
+            </SportsStoryWrapper>
           ))}
         </SportsStories>
       </SportsSection>
     </Wrapper>
-  );
-};
+  )
+}
 
 const Wrapper = styled.div`
   display: grid;
   gap: 48px;
-`;
 
-const MarketsSection = styled.section``;
+  @media ${QUERIES.tabletAndUp} {
+    gap: 64px;
+    grid-template-columns: 100%;
+  }
 
-const MarketCards = styled.div``;
+  @media ${QUERIES.laptopAndUp} {
+    gap: 0px;
+    grid-template-columns: 1fr minmax(0px, 1fr);
+  }
+`
 
-const SportsSection = styled.section``;
+const MarketsSection = styled.section`
+  @media ${QUERIES.laptopAndUp} {
+    padding-right: 16px;
+    margin-right: 16px;
+    border-right: 1px solid var(--color-gray-300);
+  }
+`
 
-const SportsStories = styled.div``;
+const MarketCards = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 16px;
+`
 
-export default SpecialtyStoryGrid;
+const SportsSection = styled.section``
+
+const SportsStories = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 16px;
+
+  @media ${QUERIES.tabletAndUp} {
+    display: flex;
+    grid-template-columns: revert;
+    overflow: auto;
+    /* flex-flow: nowrap; */
+    /* overflow-x: auto; */
+  }
+`
+
+const SportsStoryWrapper = styled.div`
+  @media ${QUERIES.tabletAndUp} {
+    min-width: 220px;
+  }
+`
+
+export default SpecialtyStoryGrid
